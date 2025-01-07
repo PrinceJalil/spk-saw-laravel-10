@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('alternative_id')->constrained()->onDelete('cascade');
             $table->foreignId('criteria_id')->constrained()->onDelete('cascade');
-            $table->float('value'); // Nilai alternatif untuk kriteria tertentu
+            $table->float('value')->nullable(); // Nilai alternatif untuk kriteria tertentu
             $table->timestamps();
         });
         

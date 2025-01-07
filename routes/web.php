@@ -25,6 +25,8 @@ Route::get('/kriteriatabel',[DbController::class, 'kriteriadata'], function () {
     return view('tabel.kriteriatabel');
 })->middleware(['auth', 'verified'])->name('dashboard');;
 Route::put('/kriteriaupdate/{id}', [KriteriaController::class, 'update'])->name('kriteria.update');
+Route::post('/kriteriaadd', [KriteriaController::class, 'store'])->name('kriteria.store');
+Route::delete('/kriteria/{id}/delete', [KriteriaController::class, 'delete'])->name('kriteria.delete');
 
 
 Route::get('/alternatif',[DecisionController::class, 'nilai'], function () {

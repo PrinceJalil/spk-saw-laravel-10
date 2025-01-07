@@ -73,22 +73,22 @@
                     <div class="card">
                         <div class="card-body">
                             <table class="table datatable">
-                                <thead class="align-middle">
-                                    <tr>
+                                <thead>
+                                    <tr class="align-middle">
                                         <th>No.</th>
                                         <th>Nama</th>
                                         @foreach ($criteria as $crit)
-                                        <th>{{ $crit->nama }}</th>
+                                        <th class="text-center">{{ $crit->nama }}</th>
                                         @endforeach
                                     </tr>
                                 </thead>
-                                <tbody class="align-middle">
+                                <tbody>
                                     @foreach ($alternatives as $alt)
                                     <tr>
                                         <td>{{ $loop->iteration}}.</td>
                                         <td>{{ $alt->nama }}</td>
                                         @foreach ($criteria as $crit)
-                                        <td>{{ number_format($normalized[$alt->id][$crit->id], 2) }}</td>
+                                        <td class="text-center">{{ number_format($normalized[$alt->id][$crit->id], 2) }}</td>
                                         @endforeach
                                     </tr>
                                     @endforeach

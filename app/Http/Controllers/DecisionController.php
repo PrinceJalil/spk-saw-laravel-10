@@ -45,7 +45,7 @@ class DecisionController extends Controller
 
         $normalized = [];
         foreach ($criteria as $crit) {
-            $maxValue = $alternatives->max(fn ($alt) => $alt->nilai->where('criteria_id', $crit->id)->pluck('value')->max());
+            $maxValue = $alternatives->max(fn($alt) => $alt->nilai->where('criteria_id', $crit->id)->pluck('value')->max());
             foreach ($alternatives as $alt) {
                 $nilai = $alt->nilai->where('criteria_id', $crit->id)->first();
                 $normalized[$alt->id][$crit->id] = $nilai->value / $maxValue;
@@ -63,7 +63,7 @@ class DecisionController extends Controller
         // Normalisasi
         $normalized = [];
         foreach ($criteria as $crit) {
-            $maxValue = $alternatives->max(fn ($alt) => $alt->nilai->where('criteria_id', $crit->id)->pluck('value')->max());
+            $maxValue = $alternatives->max(fn($alt) => $alt->nilai->where('criteria_id', $crit->id)->pluck('value')->max());
             foreach ($alternatives as $alt) {
                 $nilai = $alt->nilai->where('criteria_id', $crit->id)->first();
                 $normalized[$alt->id][$crit->id] = $nilai->value / $maxValue;
@@ -74,7 +74,7 @@ class DecisionController extends Controller
         $results = [];
         foreach ($alternatives as $alt) {
             $results[$alt->id] = array_sum(array_map(
-                fn ($critId) => $normalized[$alt->id][$critId] * $criteria->find($critId)->bobotkriteria,
+                fn($critId) => $normalized[$alt->id][$critId] * $criteria->find($critId)->bobotkriteria,
                 array_keys($normalized[$alt->id])
             ));
         }
@@ -85,31 +85,31 @@ class DecisionController extends Controller
     }
 
     public function update(Request $request, $id)
-{
-    // Update nama alternatif
-    $alternative = Alternative::findOrFail($id);
-    $alternative->update(['nama' => $request->input('alternatives')[0]['nama']]);
+    {
+        // Update nama alternatif
+        $alternative = Alternative::findOrFail($id);
+        $alternative->update(['nama' => $request->input('alternatives')[0]['nama']]);
 
-    // Update nilai kriteria
-    foreach ($request->input('nilai') as $criteriaId => $value) {
-        $nilai = Nilai::where('alternative_id', $id)->where('criteria_id', $criteriaId)->first();
-        if ($nilai) {
-            $nilai->update(['value' => $value]);
+        // Update nilai kriteria
+        foreach ($request->input('nilai') as $criteriaId => $value) {
+            $nilai = Nilai::firstOrNew([
+                'alternative_id' => $id,
+                'criteria_id' => $criteriaId
+            ]);
+            $nilai->value = $value; // Update nilai kriteria
+            $nilai->save(); // Simpan nilai
         }
+
+        return redirect()->back()->with('menyala', 'Data berhasil diupdate!');
     }
 
-    return redirect()->back()->with('menyala', 'Data berhasil diupdate!');
+
+    public function delete($id)
+    {
+        $alternative = Alternative::findOrFail($id);
+        $alternative->nilai()->delete(); // Hapus nilai kriteria
+        $alternative->delete(); // Hapus alternatif
+
+        return redirect()->back()->with('delete', 'Item deleted successfully');
+    }
 }
-
-public function delete($id)
-{
-    $alternative = Alternative::findOrFail($id);
-    $alternative->nilai()->delete(); // Hapus nilai kriteria
-    $alternative->delete(); // Hapus alternatif
-
-    return redirect()->back()->with('delete', 'Item deleted successfully');
-}
-    
-}
-
-

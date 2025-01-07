@@ -72,7 +72,7 @@
 
                     <div class="card">
                         <div class="card-body">
-                            <table class="table datatable">
+                            <table class="table datatable ">
                                 <thead>
                                     <tr>
                                         <th>Rank</th>
@@ -85,7 +85,7 @@
                                     <tr>
                                         <td>{{ $loop->iteration}}.</td>
                                         <td>{{ $alternatives->find($altId)->nama }}</td>
-                                        <td class="fw-bold text-success">{{ number_format($nilai, 2) }}</td>
+                                        <td class="fw-bold text-success">{{ number_format($nilai, 3) }}</td>
                                     </tr>
                                     @endforeach
                                 </tbody>

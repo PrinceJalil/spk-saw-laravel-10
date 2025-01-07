@@ -73,7 +73,7 @@
                     <div class="card">
                         <div class="card-body">
                             <button type="button" class="btn btn-primary mt-3 mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                <i class="bi bi-plus-square me-2"></i>Tambah Data
+                                <i class="bi bi-plus-square me-2"></i>Tambah Alternatif
                             </button>
 
                             <table class="table datatable table-hover table-select">
@@ -112,7 +112,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Tambah Data</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah Alternatif</h5>
                     <button id="cancelButton" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -135,6 +135,16 @@
                             </select>
                         </div>
                         @endforeach
+
+                        <div>
+                            <label for="">Keterangan : <br><ul>
+                                <li>0.4 = Sangat Baik</li>
+                                <li>0.3 = Baik</li>
+                                <li>0.2 = Cukup</li>
+                                <li>0.1 = Kurang</li>
+                            </ul></label>
+                        </div>
+
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary">Tambah</button>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
@@ -188,14 +198,28 @@
                         <div class="mb-3">
                             <label class="mb-1">{{ $crit->nama }}</label>
                             <select name="nilai[{{ $crit->id }}]" class="form-select" required>
-                                <option style="display: none;">{{ $alt->nilai->where('criteria_id', $crit->id)->first()->value ?? 'Pilih Nilai' }}</option>
-                                <option value="0.1" {{ $alt->nilai->where('criteria_id', $crit->id)->first()->value == 0.1 ? 'selected' : '' }}>0.1</option>
-                                <option value="0.2" {{ $alt->nilai->where('criteria_id', $crit->id)->first()->value == 0.2 ? 'selected' : '' }}>0.2</option>
-                                <option value="0.3" {{ $alt->nilai->where('criteria_id', $crit->id)->first()->value == 0.3 ? 'selected' : '' }}>0.3</option>
-                                <option value="0.4" {{ $alt->nilai->where('criteria_id', $crit->id)->first()->value == 0.4 ? 'selected' : '' }}>0.4</option>
+                                @php
+                                $nilaiObj = $alt->nilai->where('criteria_id', $crit->id)->first();
+                                $nilaiValue = $nilaiObj ? $nilaiObj->value : null;
+                                @endphp
+                                <option style="display: none;" {{ is_null($nilaiValue) ? 'selected' : '' }}>Pilih Nilai</option>
+                                <option value="0.1" {{ $nilaiValue == 0.1 ? 'selected' : '' }}>0.1</option>
+                                <option value="0.2" {{ $nilaiValue == 0.2 ? 'selected' : '' }}>0.2</option>
+                                <option value="0.3" {{ $nilaiValue == 0.3 ? 'selected' : '' }}>0.3</option>
+                                <option value="0.4" {{ $nilaiValue == 0.4 ? 'selected' : '' }}>0.4</option>
                             </select>
                         </div>
                         @endforeach
+
+                        <div>
+                            <label for="">Keterangan : <br><ul>
+                                <li>0.4 = Sangat Baik</li>
+                                <li>0.3 = Baik</li>
+                                <li>0.2 = Cukup</li>
+                                <li>0.1 = Kurang</li>
+                            </ul></label>
+                        </div>
+
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary">Simpan</button>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>

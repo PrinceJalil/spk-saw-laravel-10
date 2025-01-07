@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>
+    <title>Login SPK METODE SAW</title>
     <link
       href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
       rel="stylesheet"
@@ -15,7 +15,7 @@
     <div class="container">
       <form method="POST" action="{{ route('login') }}">
       @csrf
-        <h1>Login SPK</h1>
+        <h1>Login SPK - SAW</h1>
 
         <div class="input-box">
           <label for="email" :value="__('Email')"/>

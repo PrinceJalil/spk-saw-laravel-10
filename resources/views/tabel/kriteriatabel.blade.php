@@ -72,16 +72,16 @@
 
                     <div class="card">
                         <div class="card-body">
-                            <!-- <button type="button" class="btn btn-primary mt-3 mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <button type="button" class="btn btn-primary mt-3 mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                 <i class="bi bi-plus-square me-2"></i>Tambah Kriteria
-                            </button> -->
+                            </button>
                             <table class="table datatable">
                                 <thead>
                                     <tr>
                                         <th>No.</th>
                                         <th>Nama Kriteria</th>
                                         <th>Bobot Kriteria</th>
-                                        <th>Aksi</th>
+                                        <th class="text-center">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody class="align-middle">
@@ -89,7 +89,9 @@
                                     <td>{{ $loop->iteration}}.</td>
                                     <td>{{ $item->nama}}</td>
                                     <td>{{ $item->bobotkriteria}}</td>
-                                    <td><button class="btn btn-warning mt-2 mb-2" data-bs-target="#exampleModalToggle2{{ $item->id }}" data-bs-toggle="modal" data-bs-dismiss="modal"><i class="bi bi-pencil-square"></i></button></td>
+                                    <td class="text-center"><button class="btn btn-warning mt-2 mb-2" data-bs-target="#exampleModalToggle2{{ $item->id }}" data-bs-toggle="modal" data-bs-dismiss="modal"><i class="bi bi-pencil-square"></i></button>
+                                    <button class="btn btn-danger ms-2 mt-2 mb-2" onclick="confirmDelete('{{$item->id}}')"><i class="bi bi-trash3-fill"></i>
+                                    </button></td>
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -105,19 +107,34 @@
     </main><!-- End #main -->
 
     <!-- Add Data Modal -->
-    <!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Tambah Data</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah Kriteria</h5>
                     <button id="cancelButton" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    
+                <form action="{{ route('kriteria.store') }}" method="post">
+                        @csrf
+
+                        <div class=" mb-3" for="nama">
+                            <input type="text" name="nama" class="input-group form-control form-control-lg bg-light fs-6" placeholder="Nama kriteria" autofocus>
+                        </div>
+
+                        <div class="mb-3" for="bobotkriteria">
+                            <input type="text" name="bobotkriteria" class="input-group form-control form-control-lg bg-light fs-6" placeholder="Bobot kriteria">
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn btn-primary">Tambah</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-    </div> -->
+    </div>
     <!-- End Add Data Modal -->
 
     <!-- Edit Modal -->
@@ -152,6 +169,11 @@
             </div>
         </div>
     </div>
+
+    <form id="delete-form-{{ $item->id }}" action="{{ route('kriteria.delete', $item->id) }}" method="POST" style="display: none;">
+        @csrf
+        @method('DELETE')
+    </form>
     @endforeach
     <!-- End Edit Modal -->
 
