@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+
 
 class KriteriaTableSeeder extends Seeder
 {
@@ -34,6 +36,14 @@ class KriteriaTableSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+        ]);
+
+        DB::table('users')->insert([
+                'name' => 'Admin',
+                'email' => 'admin@spk',
+                'password' => Hash::make('adminspk999'),
+                'created_at' => now(),
+                'updated_at' => now(),
         ]);
     }
 }
